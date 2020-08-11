@@ -1,0 +1,15 @@
+{
+  "name": "WebSocket-Practice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:AdrianoX/WebSocket-Practice.git",
+  "author": "Adrian Kryzinski <adriankryzinski@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+      "start": "nodemon server"
+  },
+  "dependencies": {
+    "express": "4.17.1",
+    "nodemon": "^2.0.4"
+  }
+}
