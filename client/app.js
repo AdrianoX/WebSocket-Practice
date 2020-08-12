@@ -25,7 +25,7 @@ function sendMessage(e) {
     if(messageContentInput.value == ''){
         alert('Upss... text content needed : ) ')
     } else {
-        addMessage(userName, messageContentInput.value); // messageContentInput.value(userName = '');
+        addMessage(userName, messageContentInput.value);
         messageContentInput.value = '';
     }
 };
