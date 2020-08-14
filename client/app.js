@@ -23,6 +23,7 @@ function login (e) {
         loginForm.classList.remove('show');
         messagesSection.classList.add('show');
     }
+    socket.emit('newUser', userName);
 };
 
 // function sendMessage(e) {
@@ -35,6 +36,14 @@ function login (e) {
 //         messageContentInput.value = '';
 //     }
 // };
+
+socket.on('newUser', newUser => {
+    addMessage('Chat Bot', `${newUser} has joined the conversation! : - )`);
+  })
+  
+  socket.on('userLeft', oldUser => {
+    addMessage('Chat Bot', `${oldUser.userName} has left the conversation... ;(`);
+  })
 
 function sendMessage(e) {
     e.preventDefault();
@@ -52,18 +61,12 @@ function sendMessage(e) {
   
   }
 
-function addMessage(author, content) {
+  const addMessage = (author, content) => {
+    console.log('addMessage():', author, content, userName);
     const message = document.createElement('li');
-    message.classList.add('message');
-    message.classList.add('message--received');
-    if(author === userName) message.classList.add('message--self');
-    message.innerHTML = `
-      <h3 class="message__author">${userName === author ? 'You' : author }</h3>
-      <div class="message__content">
-        ${content}
-      </div>
-    `;
-    messagesList.appendChild(message);
+    message.classList.add('message', 'message--received', author === 'Chat Bot' ? 'message--bot' : author === userName ? 'message--self' : null);
+    message.innerHTML = '<h3 class="message__author">' + (author === userName ? 'You' : author ) + '</h3><div class="message__content">' + content + '</div>';
+    messagesList.appendChild(message)
   }
 
 loginForm.addEventListener('submit', login);

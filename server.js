@@ -5,6 +5,7 @@ const socket = require('socket.io');
 const app = express();
 
 const messages = [];
+const users = [];
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '/client/')));
@@ -31,6 +32,29 @@ io.on('connection', (socket) => {
         messages.push(message);
         socket.broadcast.emit('message', message);
       })
-    socket.on('disconnect', () => { console.log('Oh, socket ' + socket.id + ' has left') });
+    // socket.on('disconnect', () => { console.log('Oh, socket ' + socket.id + ' has left') });
+    socket.on('newUser', (newUser) => {
+        console.log('New' + newUser + 'has loged in');
+        users.push({userName: newUser, id: socket.id});
+        socket.broadcast.emit('newUser', newUser); 
+        console.log(users);
+      })
+      socket.on('disconnect', () => {
+        let user = users.findIndex(user => user.id === socket.id);
+        let leftUser = users.find(user => user.id === socket.id);
+        console.log('user:', user, 'leftUser:', leftUser);
+        console.log('Oh, socket ' + socket.id + ' has left');
+        socket.broadcast.emit('userLeft', leftUser); 
+        users.splice(user , 1);
+      });
+    // socket.on('join', (userName) => {
+    //     users.push({name: userName, id: socket.id});
+    //     socket.broadcast.emit('newUser', userName);
+    // });
+    // socket.on('disconnect', () => {
+    //     console.log('Oh, socket ' + socket.id + ' has left');
+    //     const user = users[index];
+    //     socket.broadcast.emit('removedUser', user);
+    // })
     console.log('I\'ve added a listener on message event \n');
   });
