@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
         messages.push(message);
         socket.broadcast.emit('message', message);
       })
-    // socket.on('disconnect', () => { console.log('Oh, socket ' + socket.id + ' has left') });
+
     socket.on('newUser', (newUser) => {
         console.log('New' + newUser + 'has loged in');
         users.push({userName: newUser, id: socket.id});

@@ -45,7 +45,6 @@ function sendMessage(e) {
       socket.emit('message', { author: userName, content: messageContent })
       messageContentInput.value = '';
     }
-  
   }
 
   const addMessage = (author, content) => {
