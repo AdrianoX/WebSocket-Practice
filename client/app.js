@@ -9,8 +9,6 @@ const socket = io();
 
 socket.on('message', ({ author, content }) => addMessage(author, content))
 
-// socket.on('message', addMessage) - listener example
-
 let userName ;
 
 function login (e) {
@@ -25,17 +23,6 @@ function login (e) {
     }
     socket.emit('newUser', userName);
 };
-
-// function sendMessage(e) {
-//     e.preventDefault();
-
-//     if(messageContentInput.value == ''){
-//         alert('Upss... text content needed : ) ')
-//     } else {
-//         addMessage(userName, messageContentInput.value);
-//         messageContentInput.value = '';
-//     }
-// };
 
 socket.on('newUser', newUser => {
     addMessage('Chat Bot', `${newUser} has joined the conversation! : - )`);
