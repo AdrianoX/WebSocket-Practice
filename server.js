@@ -39,6 +39,7 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('newUser', newUser); 
         console.log(users);
       })
+      
       socket.on('disconnect', () => {
         let user = users.findIndex(user => user.id === socket.id);
         let leftUser = users.find(user => user.id === socket.id);
